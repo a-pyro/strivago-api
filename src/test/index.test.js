@@ -45,7 +45,8 @@ describe('Checking api main endpoints', () => {
     expect(response.body).toBeDefined();
     expect(Array.isArray(response.body)).toBeTruthy();
   });
-  it('should check that the /accomodation endpoint return the id of accomodation', async () => {
+
+  it('should check that the POST /accomodation endpoint return the id of accomodation', async () => {
     const response = await request.post('/accomodation');
     await AccomodationModel.create(accomodation);
 
@@ -53,15 +54,24 @@ describe('Checking api main endpoints', () => {
     expect(response.body).toBeDefined();
     expect(typeof response.body._id).toBe('string');
   });
+
   it('should check that the /accomodation/{id} enpoint return the edited accomodation', async () => {
-    const response = await request.put('/accomodation/:id');
+    const newAcc = await AccomodationModel.create(accomodation);
+
+    const { _id } = newAcc;
+
+    const response = await request.put('/accomodation/' + _id);
 
     expect(response.status).toBe(200);
     expect(response.body).toBeDefined();
     expect(response.body).toBeDefined();
   });
   it('should check that the /accomodation/{id} endpoint return the delete accomodation', async () => {
-    const response = await request.delete('/accomodation/:id');
+    const newAcc = await AccomodationModel.create(accomodation);
+
+    const { _id } = newAcc;
+
+    const response = await request.delete('/accomodation/' + _id);
 
     expect(response.status).toBe(204);
   });

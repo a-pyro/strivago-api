@@ -1,13 +1,14 @@
 import express from 'express';
-import * as OpenApiValidator from 'express-openapi-validator';
 import cors from 'cors';
 import connectDB from './db/index.js';
 import listEndpoints from 'express-list-endpoints';
 import morgan from 'morgan';
+import * as OpenApiValidator from 'express-openapi-validator';
 import accomodationRoutes from './routes/accomodations.js';
 import destinationsRoutes from './routes/destinations.js';
 import { errorHandler } from './middlewares/errors/errorHandlers.js';
-
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 export const app = express();
 
 const { PORT } = process.env;
@@ -18,13 +19,16 @@ app.use(express.json());
 
 app.use(morgan('dev'));
 
-// app.use(
-//   OpenApiValidator.middleware({
-//     apiSpec: './apiDescription.yaml',
-//     validateRequests: true, // (default)
-//     validateResponses: true, // false by default
-//   })
-// );
+app.use(
+  OpenApiValidator.default.middleware({
+    apiSpec: join(
+      dirname(fileURLToPath(import.meta.url)),
+      './apiDescription.yaml'
+    ),
+    validateRequests: true, // (default)
+    validateResponses: true, // false by default
+  })
+);
 
 app.use('/accomodation', accomodationRoutes);
 
