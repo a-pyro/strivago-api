@@ -15,13 +15,8 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const accomodation = await AccomodationModel.create({
-      name: 'test',
-      description: 'test',
-      maxGuests: 10,
-      city: 'rome',
-    });
-    res.status(201).send(accomodation);
+    const newAccomodation = await AccomodationModel.create(req.body);
+    res.status(201).send(newAccomodation);
   } catch (error) {
     next(error);
   }
