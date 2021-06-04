@@ -6,6 +6,8 @@ const router = Router();
 
 router.get('/', async (req, res, next) => {
   try {
+    // const accomodations = await AccomodationModel.find({});
+    // res.status(200).send(accomodations);
   } catch (error) {
     next(error);
   }
