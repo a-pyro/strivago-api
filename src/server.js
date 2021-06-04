@@ -15,20 +15,20 @@ const { PORT } = process.env;
 
 app.use(cors());
 
+// app.use(
+//   OpenApiValidator.default.middleware({
+//     apiSpec: join(
+//       dirname(fileURLToPath(import.meta.url)),
+//       './apiDescription.yaml'
+//     ),
+//     validateRequests: true, // (default)
+//     validateResponses: true, // false by default
+//   })
+// );
+
 app.use(express.json());
 
 app.use(morgan('dev'));
-
-app.use(
-  OpenApiValidator.default.middleware({
-    apiSpec: join(
-      dirname(fileURLToPath(import.meta.url)),
-      './apiDescription.yaml'
-    ),
-    validateRequests: true, // (default)
-    validateResponses: true, // false by default
-  })
-);
 
 app.use('/accomodation', accomodationRoutes);
 
