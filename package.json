@@ -1,0 +1,33 @@
+{
+  "name": "strivago-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-pyro/strivago-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a-pyro/strivago-api/issues"
+  },
+  "homepage": "https://github.com/a-pyro/strivago-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-openapi-validator": "^4.12.11",
+    "mongoose": "^5.12.12",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "jest": "^27.0.4",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
+  }
+}
