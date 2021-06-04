@@ -1,0 +1,1 @@
+# strivago-api
