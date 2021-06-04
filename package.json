@@ -23,12 +23,15 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-list-endpoints": "^5.0.0",
     "express-openapi-validator": "^4.12.11",
     "mongoose": "^5.12.12",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
-    "nodemon": "^2.0.7"
+    "jest": "^27.0.4",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
   }
 }
