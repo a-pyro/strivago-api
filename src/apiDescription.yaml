@@ -1,0 +1,222 @@
+openapi: 3.0.1
+info:
+  title: Strivago API
+  description: API for retrieving accomodations in the word
+  version: 1.0.0
+servers:
+  - url: http://localhost:3001
+    description: Local server
+  - url: https://strive-heroku-test.herokuapp.com/
+    description: Deployed server
+tags:
+  - name: accomodations
+    description: Operations about accomodations
+  - name: destinations
+    description: Operations about destinations
+paths:
+  /accomodation:
+    get:
+      tags:
+        - accomodations
+      summary: Returns the full list of accommodation.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200': # status code
+          description: A list of accomodations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Accomodation'
+        '500':
+          $ref: '#/components/responses/GenericServerError'
+    post:
+      tags:
+        - accomodations
+      summary: Add a new accomodation
+      description: Adds a new accomodation
+      requestBody:
+        description: The object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccomodationPostBody'
+      responses:
+        '201': # status code
+          description: The ID of the newly created accomodation
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+          
+  /accomodation/{id}:
+    get:
+      tags:
+        - accomodations
+      summary: Get specific accomodation by giving an ID 
+      description: Retrieve single Accomodation
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the Accomodation to retrieve
+      responses:
+        '200': # status code
+          description: The single Accomodation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Accomodation'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - accomodations
+      description: Update an existing Accomodation
+      summary: Update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the Accomodation to update
+      requestBody:
+        description: Fields to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Accomodation'
+      responses:
+        '200': # status code
+          description: Get the updated single Accomodation
+          content:
+           application/json:
+              schema:
+                $ref: '#/components/schemas/Accomodation'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+        - accomodations
+      description: Delete a specific Accomodation by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the Accomodation to delete
+      responses:
+        '204': # status code
+          description: The single Accomodation
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /destinations:
+    get:
+      tags:
+        - destinations
+      summary: Returns the list of all available locations where there is an accommodation
+      
+      responses:
+        '200': # status code
+          description: A list of destinations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500':
+          $ref: '#/components/responses/GenericServerError'
+  /destinations/{city}:
+     get:
+      tags:
+        - destinations
+      summary: will return the list of accommodation for a specific city
+      description: will return the list of accommodation for a specific city
+      parameters:
+        - in: path
+          name: city
+          required: true
+          schema:
+            type: string
+          description: The ID of the Accomodation to retrieve
+      responses:
+        '200': # status code
+          description: list of accommodation for a specific city
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                 $ref: '#/components/schemas/Accomodation'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  
+  
+components:
+  responses:
+    NotFound:
+      description: The specific resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GenericServerError:
+      description: A problem on the server occurred
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Accomodation:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        maxGuests:
+          type: number
+        city:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    AccomodationPostBody:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        maxGuests:
+          type: number
+        city:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
