@@ -39,8 +39,11 @@ describe('Checking api main endpoints', () => {
   it('Should check that the /accomodation endpoint returns the full list of accomodations', async () => {
     const response = await request.get('/accomodation');
 
-    await AccomodationModel.create(accomodation);
+    // const newAcc = await AccomodationModel.create(accomodation);
+    // console.log(newAcc);
+    // console.log(response.body);
 
+    // expect(newAcc._id).toEqual(response.body[0]._id);
     expect(response.status).toBe(200);
     expect(response.body).toBeDefined();
     expect(Array.isArray(response.body)).toBeTruthy();
